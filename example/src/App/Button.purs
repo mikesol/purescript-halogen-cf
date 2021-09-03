@@ -7,7 +7,7 @@ import Effect.Class.Console as Log
 import Halogen as H
 import Halogen.Cf (doThis)
 import Halogen.Cf as HCf
-import Halogen.Cf.Sugar (fixCf)
+import Halogen.Cf.Sugar (fixCf2)
 import Halogen.HTML as HH
 import Halogen.HTML.Events as HE
 import Halogen.HTML.Properties as HP
@@ -17,7 +17,7 @@ classes = HP.classes <<< map H.ClassName
 
 component :: forall q i o. H.Component q i o Aff
 component =
-  HCf.component HCf.defaultOptions ({ foo: 0, bar: 0 } # fixCf \render i@{ foo, bar } _ -> do
+  HCf.component HCf.defaultOptions ({ foo: 0, bar: 0 } # fixCf2 \render i@{ foo, bar } _ -> do
     when (bar `mod` 3 == 0) (Log.info $ "Bar at " <> show bar <> " is mod 3!")
     pure
       ( HH.div [ classes [ "w-screen", "h-screen" ] ]

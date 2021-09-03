@@ -7,7 +7,7 @@ import Data.Foldable (foldl)
 import Halogen as H
 import Halogen.Cf (doThis)
 import Halogen.Cf as HCf
-import Halogen.Cf.Sugar (bindCfRP, fixCf)
+import Halogen.Cf.Sugar (bindCfRP, fixCf2)
 import Halogen.HTML as HH
 import Halogen.HTML.Events as HE
 import Halogen.HTML.Properties as HP
@@ -19,7 +19,7 @@ _stateHook = Proxy :: Proxy "stateHook"
 
 component :: forall q i m. H.Component q i Output m
 component =
-  HCf.component HCf.defaultOptions ({ n: 0, n1: 0, n2: 0, n3: 0, n4: 0 } # fixCf \render i _ ->  do
+  HCf.component HCf.defaultOptions ({ n: 0, n1: 0, n2: 0, n3: 0, n4: 0 } # fixCf2 \render i _ ->  do
 
         let
           runState _ = doThis $

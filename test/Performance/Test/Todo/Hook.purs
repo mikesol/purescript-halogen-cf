@@ -11,7 +11,7 @@ import Halogen (liftEffect)
 import Halogen as H
 import Halogen.Cf as HCf
 import Halogen.Cf as Hooks
-import Halogen.Cf.Sugar (bindCfRP, fixCf)
+import Halogen.Cf.Sugar (bindCfRP, fixCf, fixCf2)
 import Halogen.HTML as HH
 import Halogen.HTML.Events as HE
 import Halogen.HTML.Properties as HP
@@ -28,7 +28,7 @@ container =
   HCf.component
     (HCf.defaultOptions { receiveInput = const (const Nothing) })
     $ bindCfRP (liftEffect $ Shared.fillContainerState Shared.initialContainerState)
-    $ fixCf \render state _ -> do
+    $ fixCf2 \render state _ -> do
 
       let
         handleTodo = HCf.doThis <<< case _ of
@@ -68,7 +68,7 @@ todo =
         }
     )
     $ { description: Nothing } #
-      ( fixCf \render i input -> do
+      ( fixCf2 \render i input -> do
 
           let
             description = fromMaybe input.todo.description i.description
@@ -96,12 +96,11 @@ checkbox :: forall q m. MonadAff m => H.Component q CheckboxInput CheckboxOutput
 checkbox =
   HCf.component
     (HCf.defaultOptions { receiveInput = const (const Nothing) })
-    $ fix \render input ->
-      ( pure $ HH.input
-          [ HP.id (Shared.checkId input.id)
-          , HP.checked $ Set.member input.id input.completed
-          , HP.type_ HP.InputCheckbox
-          , HE.onChecked \checked -> HCf.doThisNoRender $ H.raise (Check checked)
-          ]
-      ) :< render
+    $ fixCf \render input ->
+      pure $ HH.input
+        [ HP.id (Shared.checkId input.id)
+        , HP.checked $ Set.member input.id input.completed
+        , HP.type_ HP.InputCheckbox
+        , HE.onChecked \checked -> HCf.doThisNoRender $ H.raise (Check checked)
+        ]
 
