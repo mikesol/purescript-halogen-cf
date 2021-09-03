@@ -8,7 +8,7 @@ import Control.Comonad.Cofree.Class (unwrapCofree)
 import Control.Lazy (fix)
 
 joinCf :: forall m r a. Monad m => m (Cofree ((->) r) (m a)) -> Cofree ((->) r) (m a)
-joinCf m = (join $ map extract m) :< \input -> joinCf (map ((#) input) (map unwrapCofree m))
+joinCf m = (m >>= extract) :< (joinCf <<< ((>>>) (#) ((<#>) (map unwrapCofree m))))
 
 bindCf :: forall m r a' a. Monad m => m a' -> (a' -> m (Cofree ((->) r) (m a))) -> Cofree ((->) r) (m a)
 bindCf m f = joinCf (m >>= f)

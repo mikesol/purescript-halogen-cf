@@ -66,7 +66,6 @@ doThisNoRender
   -> CfAction input slots output m
 doThisNoRender = DoThisNoRender
 
-
 handleCfAction
   :: forall input slots output m rest
    . { finalize :: HalogenCfM input slots output m Unit

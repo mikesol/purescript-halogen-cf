@@ -1,38 +1,29 @@
-# purescript-halogen-ihooks
+# purescript-halogen-cf
 
-A hooks library for halogen.
+A library for writing comonadic renderers with Halogen
 
 ## Structure
 
-The library is comprised of three modules:
+The library is comprised of two modules:
 
-- `Halogen.IHooks`: core hooks library.
-- `Halogen.IHooks.Sugar`: one-liners for stuff that I found myself writing over and over.
-- `Halogen.IHooks.Compat`: a "drop-in" library for [`purescript-halogen-hooks`](https://github.com/thomashoneyman/purescript-halogen-hooks). The types are different, but the syntax should be identical.
+- `Halogen.Cf`: core library.
+- `Halogen.Cf.Sugar`: one-liners for stuff that I found myself writing over and over.
 
 ## Basic example
 
 ```purescript
-myComponent = Hooks.component Hooks.defaultOptions \input -> Ix.do
-  count <- Sugar.hookConsPure (Proxy :: _ "count") 0
+myComponent = HCf.component HCf.defaultOptions
+  ({ count: 0 } # fixCf \render { count } _ -> do
 
-  ipure $
-    HH.button
-      [ HE.onClick \_ -> Sugar.modify_ (Proxy :: _ "count") (_ + 1) ]
-      [ HH.text $ show count ]
+    pure $
+      HH.button
+        [ HE.onClick \_ -> HCf.doThis render ({ count: count + 1 }) ]
+        [ HH.text $ show count ])
 ```
-
-The main difference with [`purescript-halogen-hooks`](https://github.com/thomashoneyman/purescript-halogen-hooks) is that the index of the hook is a `Symbol` proxy determined by the calling code.
-
-![Hook indices set by calling code](https://i.ibb.co/swSvkfN/hooks0.png)
-
-This allows you to inspect the type in the IDE as you're putting together the hooks.
-
-![Hook indices inspected in the IDE](https://i.ibb.co/7YLWqvD/hooks1.png)
 
 ## Example
 
-Check out [the example](./example) code, and play with it live on [purescript-halogen-ihooks.surge.sh](https://purescript-halogen-ihooks.surge.sh/).
+Check out the [./example](./example). A live version is [here](https://purescript-halogen-cf.surge.sh/).
 
 ## Contributing
 
@@ -40,8 +31,7 @@ Contributions are welcome! If you feel anything could be improved or needs more 
 
 ## Goals
 
+- Performance
 - Type-safety
 - Small core API (less than 300 lines of code)
-- Helpful error messages
-- Semantic naming of hooks via symbols
-- Performance
+- Small components

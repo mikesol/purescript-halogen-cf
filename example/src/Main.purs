@@ -3,7 +3,6 @@ module Main where
 import Prelude
 
 import App.Button as Button
-import App.KitchenSink as KitchenSink
 import Data.Maybe (Maybe(..))
 import Data.Tuple (Tuple(..))
 import Effect (Effect)
@@ -17,7 +16,6 @@ stories :: Stories Aff
 stories = Object.fromFoldable
   [ Tuple "" $ proxy Button.component
   , Tuple "button" $ proxy Button.component
-  , Tuple "kitchen sink" $ proxy KitchenSink.component
   ]
 
 main :: Effect Unit
@@ -25,5 +23,5 @@ main = HA.runHalogenAff do
   HA.awaitBody >>=
     runStorybook
       { stories
-      , logo: Just (HH.div [] [HH.text "halogen ihooks"])
+      , logo: Just (HH.div [] [ HH.text "halogen ihooks" ])
       }

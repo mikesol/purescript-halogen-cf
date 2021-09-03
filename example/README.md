@@ -1,4 +1,4 @@
-# purescript-halogen-ihooks example
+# purescript-halogen-cf example
 
 ## Howto
 
