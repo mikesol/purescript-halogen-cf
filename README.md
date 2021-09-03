@@ -1,6 +1,6 @@
 # purescript-halogen-cf
 
-A library for writing comonadic renderers with Halogen
+A library for writing comonadic renderers with Halogen.
 
 ## Structure
 
