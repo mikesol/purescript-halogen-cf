@@ -13,7 +13,7 @@ The library is comprised of two modules:
 
 ```purescript
 myComponent = HCf.component HCf.defaultOptions
-  ({ count: 0 } # fixCf \render { count } _ -> do
+  ({ count: 0 } # fixCf2 \render { count } _ -> do
 
     pure $
       HH.button
