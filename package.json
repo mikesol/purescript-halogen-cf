@@ -1,0 +1,27 @@
+{
+  "name": "purescript-halogen-ihooks",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "postinstall": "node node_modules/puppeteer/install.js",
+    "clean": "rm -rf .spago output node_modules *.lock",
+    "build": "spago build",
+    "snapshot": "npm run bundle:performance && spago -x test/test.dhall run --main Performance.Snapshot.Write",
+    "test:performance": "spago -x test/test.dhall run --main Performance.Main",
+    "bundle:performance": "spago -x test/test.dhall bundle-app --main Performance.Test.App --to test/test.js --no-build",
+    "build:performance": "spago -x test/test.dhall build"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "purescript": "^0.14.4",
+    "purs-tidy": "^0.4.6",
+    "spago": "^0.20.3",
+    "filter-console": "^0.1.1",
+    "headless-devtools": "^2.0.1",
+    "puppeteer": "^5.2.0",
+    "tracealyzer": "^0.10.3"
+  }
+}
